@@ -1,0 +1,13 @@
+server:
+  port: 9000
+spring:
+  cloud:
+    nacos:
+      server-addr: http://47.108.95.212:8848
+      config:
+        file-extension: yaml
+        namespace: f19a013a-3e81-437d-892e-d3b8bc604177
+  application:
+    name: gateway
+  profiles:
+    active: dev

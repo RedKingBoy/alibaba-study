@@ -1,0 +1,27 @@
+server:
+  port: 9100
+spring:
+  redis:
+    host: 47.108.95.212
+    port: 6379
+    password: 981109
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: wfh
+    password: 981109
+    url: jdbc:mysql://47.108.95.212:3306/shopping-item?serverTimezone=UTC
+  cloud:
+    nacos:
+      server-addr: http://47.108.95.212:8848
+      discovery:
+        namespace: f19a013a-3e81-437d-892e-d3b8bc604177
+  application:
+    name: item
+mybatis-plus:
+  type-aliases-package: com.wfh.shopping.pojo,com.wfh.shopping.item.vo
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+shopping:
+  fdfs:
+    tracker-servers: 47.108.95.212:22122

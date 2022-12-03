@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace必须要和Mapper接口的全类名保持一致-->
+<mapper namespace="com.wfh.shopping.item.mapper.BrandMapper">
+
+    <insert id="addCategoryBrand">
+        INSERT INTO category_brand(category_id,brand_id) VALUES (#{categoryId},#{id})
+    </insert>
+
+    <resultMap id="brandMap" type="BrandVo">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="logo" column="logo"/>
+        <result property="firstChar" column="first_char"/>
+        <association property="category" javaType="category">
+            <id property="id" column="categoryId"/>
+            <result property="name" column="categoryName"/>
+        </association>
+    </resultMap>
+    <select id="searchBrands" resultMap="brandMap">
+        SELECT
+        a.id,
+        a.name,
+        a.logo,
+        a.first_char,
+        c.id categoryId,
+        c.name categoryName
+        FROM
+        brand a
+        INNER JOIN category_brand b ON a.id = b.brand_id
+        INNER JOIN category c ON b.category_id = c.id
+        WHERE
+        a.delete_flag = 0
+        AND c.delete_flag = 0
+        <if test="brandDto.name != null and brandDto.name != ''">
+            AND a.name LIKE CONCAT('%', #{brandDto.name}, '%')
+        </if>
+        <if test="brandDto.firstChar != null and brandDto.firstChar != ''">
+            AND a.first_char = #{brandDto.firstChar}
+        </if>
+    </select>
+</mapper>
